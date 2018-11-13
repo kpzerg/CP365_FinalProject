@@ -6,12 +6,18 @@ from sklearn.neural_network import MLPClassifier
 
 data = pd.read_csv('formatted_data.csv')
 
-vocab = np.unique(sum([sentence.split() for sentence in data.values[:, 0].astype(str)], []))
+print('a')
+vocab = []
+for sentence in data.values[:, 0].astype(str):
+    vocab += sentence.split()
+unique_vocab = np.unique(vocab)
 
-vectorizer = TfidfVectorizer(vocabulary=vocab)
+vectorizer = TfidfVectorizer(vocabulary=unique_vocab)
 
 X = csr_matrix(vectorizer.fit_transform(data.values[:, 0].astype('U')))
 y = data.values[:, 1].astype('int') 
+
+print('c')
 
 X_train = X[:-100]
 y_train = y[:-100]
